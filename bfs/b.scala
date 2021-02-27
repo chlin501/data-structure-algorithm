@@ -7,7 +7,7 @@ object b {
 
   case class Node(value: Int, children: List[Node] = List.empty[Node])
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     val root = Node(
       value = 3,
       children = List(
@@ -22,9 +22,9 @@ object b {
     println(result)
   }
 
-  def bfs[Node](node: Node, f: Node => Queue[Node]): Stream[Node] = {
-    def _bfs(queue: Queue[Node]): Stream[Node] = queue match {
-      case q if q.isEmpty => Stream.Empty
+  def bfs[Node](node: Node, f: Node => Queue[Node]): LazyList[Node] = {
+    def _bfs(queue: Queue[Node]): LazyList[Node] = queue match {
+      case q if q.isEmpty => LazyList.empty[Node]
       case _ =>
         val (head, rest) = queue.dequeue
         head #:: _bfs(rest ++ f(head))
